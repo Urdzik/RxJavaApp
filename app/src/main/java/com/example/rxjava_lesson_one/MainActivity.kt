@@ -3,10 +3,10 @@ package com.example.rxjava_lesson_one
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subscribers.DisposableSubscriber
 
 
 //    private val filterOnly: Predicate<String> = Predicate { t ->
@@ -21,6 +21,7 @@ import io.reactivex.schedulers.Schedulers
 class MainActivity : AppCompatActivity() {
 
     private val data = retrofitObject
+    lateinit var disposable: Disposable
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -160,31 +161,34 @@ class MainActivity : AppCompatActivity() {
 //
 
 
-        val observable = data.retrofitService.massage(1)
-
-        observable
+        val flowable = data.retrofitService.massage(1)
+        disposable = flowable
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Observer<List<Data>> {
-
-                override fun onSubscribe(d: Disposable) {
-                    log("onSubscribe")
-                }
-
-
+            .subscribeWith(object : DisposableSubscriber<List<Data>>() {
                 override fun onComplete() {
                     log("onComplete")
-                }
 
-                override fun onError(e: Throwable) {
-                    log("Exception $e")
                 }
 
                 override fun onNext(t: List<Data>) {
-                    log("onNext ${t.size}")
+                            log("onNext ${t.size}") }
+
+                override fun onError(t: Throwable?) {
+                    log("$t")
                 }
+
+
+
+
             })
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+        log("Dispose")
+        disposable.dispose()
     }
 
 

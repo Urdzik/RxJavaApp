@@ -1,6 +1,6 @@
 package com.example.rxjava_lesson_one
 
-import io.reactivex.Observable
+import io.reactivex.Flowable
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -16,7 +16,7 @@ data class Data(
 
 interface WebApi {
     @GET("messages{page}.json")
-    fun massage(@Path("page") page: Int): Observable<List<Data>>
+    fun massage(@Path("page") page: Int): Flowable<List<Data>>
 }
 
 object retrofitObject {
