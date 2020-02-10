@@ -3,23 +3,30 @@ package com.example.rxjava_lesson_one
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import com.example.rxjava_lesson_one.databinding.ActivityMainBinding
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subscribers.DisposableSubscriber
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val data = retrofitObject
+    private val dataRetrofit = retrofitObject
     private lateinit var disposable: Disposable
+    private var adapter = MainAdapter()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        val binding: ActivityMainBinding = DataBindingUtil.setContentView( this, R.layout.activity_main)
 
 
-        val flowable = data.retrofitService.massage()
+
+        binding.rv.adapter = adapter
+
+
+        val flowable = dataRetrofit.retrofitService.massage()
         disposable = flowable
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -29,7 +36,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onNext(t: List<Data>) {
-
+                    adapter.submitList(t)
                 }
 
                 override fun onError(t: Throwable?) {

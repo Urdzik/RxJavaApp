@@ -1,15 +1,17 @@
 package com.example.rxjava_lesson_one
 
+import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.rxjava_lesson_one.databinding.ItemBinding
-import okhttp3.internal.Util
 
-class MainAdapter(private val onClickListener: OnClickListener) :
-    ListAdapter<Data, MainAdapter.DataViewHolder>(DiffCallback()) {
+class MainAdapter : ListAdapter<Data, MainAdapter.DataViewHolder>(DiffCallback()) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
@@ -18,16 +20,29 @@ class MainAdapter(private val onClickListener: OnClickListener) :
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
         val item = getItem(position)
-        holder.itemView.setOnClickListener {
-            onClickListener.onClick(item)
-        }
         holder.bind(item)
     }
 
 
     class DataViewHolder(private val binding: ItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Data) {
-            binding.data = data
+            binding.textView.text = data.title
+            binding.textView2.text = data.author
+
+                Glide
+                    .with(binding.imageView.context)
+                    .load(data.url)
+                    .apply (
+                        RequestOptions()
+                            .error(R.drawable.image)
+                    )
+                    .into(binding.imageView)
+
+            log(data.url)
+
+
+
+
             binding.executePendingBindings()
         }
     }
@@ -42,8 +57,4 @@ class DiffCallback : DiffUtil.ItemCallback<Data>() {
         return oldItem.title == newItem.title
     }
 
-}
-
-class OnClickListener(val onClickListener: (data: Data) -> Util) {
-    fun onClick(data: Data) = onClickListener(data)
 }

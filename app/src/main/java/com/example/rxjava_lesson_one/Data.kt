@@ -25,7 +25,7 @@ data class Rating (
 )
 
 interface WebApi {
-    @GET("db.json")
+    @GET("book.json")
     fun massage() : Flowable<List<Data>>
 }
 
@@ -33,7 +33,7 @@ object retrofitObject {
     private val retrofit: Retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .baseUrl("https://raw.githubusercontent.com/Urdzik/dataBase/master/")
+        .baseUrl("https://raw.githubusercontent.com/Urdzik/helper/master/")
         .build()
     val retrofitService: WebApi = retrofit.create(WebApi::class.java)
 }
