@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onNext(t: List<Data>) {
-                        tv.text = t.toString()
+
                 }
 
                 override fun onError(t: Throwable?) {
