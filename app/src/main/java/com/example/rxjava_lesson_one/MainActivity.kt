@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupItemClick() {
         subscribe = adapter.clickEvent
             .subscribe {
-                Toast.makeText(this, "Clicked on $it", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Clicked on $it", Toast.LENGTH_SHORT).show()
             }
     }
 
