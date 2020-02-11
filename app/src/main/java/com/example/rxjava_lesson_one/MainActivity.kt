@@ -13,11 +13,11 @@ import io.reactivex.subscribers.DisposableSubscriber
 
 class MainActivity : AppCompatActivity() {
 
+    //TODO: Add one dispose
     private val dataRetrofit = retrofitObject
-    private lateinit var disposable: Disposable
     private var adapter = MainAdapter()
     private var subscribe: Disposable? = null
-
+    private lateinit var disposable: Disposable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

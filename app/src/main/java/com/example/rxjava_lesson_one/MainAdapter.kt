@@ -27,11 +27,12 @@ class MainAdapter : ListAdapter<Data, MainAdapter.DataViewHolder>(DiffCallback()
     }
 
 
-
+    //TODO: Add check on null for @data in bind functions
     inner class DataViewHolder(private val binding: ItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(data: Data) {
+
             binding.textView.text = data.title
             binding.textView2.text = data.author
             Glide
@@ -45,6 +46,8 @@ class MainAdapter : ListAdapter<Data, MainAdapter.DataViewHolder>(DiffCallback()
 
             binding.executePendingBindings()
 
+
+            //onClick by recycler item
             binding.root.setOnClickListener {
                 clickSubject.onNext(data.title)
             }
