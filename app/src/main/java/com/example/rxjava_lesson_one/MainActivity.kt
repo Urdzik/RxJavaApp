@@ -2,6 +2,7 @@ package com.example.rxjava_lesson_one
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.rxjava_lesson_one.databinding.ActivityMainBinding
@@ -15,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     private val dataRetrofit = retrofitObject
     private lateinit var disposable: Disposable
     private var adapter = MainAdapter()
+    private var subscribe: Disposable? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,13 +46,26 @@ class MainActivity : AppCompatActivity() {
                 }
 
             })
+
+        setupItemClick()
+
+    }
+
+
+    private fun setupItemClick() {
+        subscribe = adapter.clickEvent
+            .subscribe {
+                Toast.makeText(this, "Clicked on $it", Toast.LENGTH_LONG).show()
+            }
     }
 
     override fun onPause() {
         super.onPause()
         log("Dispose")
         disposable.dispose()
+        subscribe?.dispose()
     }
+
 }
 
 fun log(s: String) {
