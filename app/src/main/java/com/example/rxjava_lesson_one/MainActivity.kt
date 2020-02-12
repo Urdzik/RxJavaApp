@@ -1,8 +1,7 @@
 package com.example.rxjava_lesson_one
-
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.rxjava_lesson_one.databinding.ActivityMainBinding
@@ -10,6 +9,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subscribers.DisposableSubscriber
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: ActivityMainBinding = DataBindingUtil.setContentView( this, R.layout.activity_main)
+        val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
 
 
@@ -55,7 +55,13 @@ class MainActivity : AppCompatActivity() {
     private fun setupItemClick() {
         subscribe = adapter.clickEvent
             .subscribe {
-                Toast.makeText(this, "Clicked on $it", Toast.LENGTH_SHORT).show()
+                AlertDialog.Builder(this)
+                    .setTitle(it.title)
+                    .setMessage(it.text)
+                    .setPositiveButton("Done", null)
+                    .create()
+                    .show()
+
             }
     }
 

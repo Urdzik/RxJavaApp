@@ -1,6 +1,7 @@
 package com.example.rxjava_lesson_one
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -14,8 +15,8 @@ import io.reactivex.subjects.PublishSubject
 
 class MainAdapter : ListAdapter<Data, MainAdapter.DataViewHolder>(DiffCallback()) {
 
-    private val clickSubject = PublishSubject.create<String>()
-    val clickEvent: PublishSubject<String> = clickSubject
+    private val clickSubject = PublishSubject.create<Data>()
+    val clickEvent: PublishSubject<Data> = clickSubject
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
         return DataViewHolder(ItemBinding.inflate(LayoutInflater.from(parent.context)))
@@ -27,29 +28,42 @@ class MainAdapter : ListAdapter<Data, MainAdapter.DataViewHolder>(DiffCallback()
     }
 
 
-    //TODO: Add check on null for @data in bind functions
     inner class DataViewHolder(private val binding: ItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(data: Data) {
 
-            binding.textView.text = data.title
-            binding.textView2.text = data.author
+
+            if (data.title != "" && data.title.isNotEmpty()) {
+                binding.textView.text = data.title
+            } else {
+                binding.textView.text = "error"
+            }
+            if (data.author != "" && data.author.isNotEmpty()) {
+                binding.textView2.text = data.author
+            } else {
+                binding.textView2.text = "error"
+            }
+
+
+
             Glide
                 .with(binding.imageView.context)
                 .load(data.url)
                 .apply(
                     RequestOptions()
-                        .error(R.drawable.image)
+                        .error(R.drawable.error)
                 )
                 .into(binding.imageView)
 
-            binding.executePendingBindings()
 
+
+
+            binding.executePendingBindings()
 
             //onClick by recycler item
             binding.root.setOnClickListener {
-                clickSubject.onNext(data.title)
+                clickSubject.onNext(data)
             }
         }
     }
