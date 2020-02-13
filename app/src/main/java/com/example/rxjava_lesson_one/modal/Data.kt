@@ -1,11 +1,10 @@
-package com.example.rxjava_lesson_one
+package com.example.rxjava_lesson_one.modal
 
 import io.reactivex.Flowable
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Path
 
 data class Data(
     val title : String,
@@ -35,5 +34,6 @@ object retrofitObject {
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .baseUrl("https://raw.githubusercontent.com/Urdzik/helper/master/")
         .build()
-    val retrofitService: WebApi = retrofit.create(WebApi::class.java)
+    val retrofitService: WebApi = retrofit.create(
+        WebApi::class.java)
 }

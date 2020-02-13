@@ -5,6 +5,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.rxjava_lesson_one.databinding.ActivityMainBinding
+import com.example.rxjava_lesson_one.modal.Data
+import com.example.rxjava_lesson_one.modal.retrofitObject
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -13,7 +15,6 @@ import io.reactivex.subscribers.DisposableSubscriber
 
 class MainActivity : AppCompatActivity() {
 
-    //TODO: Add one dispose
     private val dataRetrofit = retrofitObject
     private var adapter = MainAdapter()
     private var subscribe: Disposable? = null
