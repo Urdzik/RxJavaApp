@@ -3,7 +3,9 @@ package com.example.rxjava_lesson_one
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.jakewharton.rxbinding2.view.RxView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.rxkotlin.Observables
 import kotlinx.android.synthetic.main.activity_edit_text.*
@@ -37,7 +39,7 @@ class EditTextActivity : AppCompatActivity() {
         val age =
             RxTextView
                 .textChanges(ageEditText)
-                .map { t -> t.length > 6 }
+                .map { t -> t.length > 2 }
                 .distinctUntilChanged()
         age
             .map { b -> if (b) Color.BLACK else Color.RED }
@@ -51,5 +53,9 @@ class EditTextActivity : AppCompatActivity() {
             button.isEnabled = b
             button.isClickable = b
         }
+        RxView.clicks(button).subscribe { click() }
+
     }
+
+    private fun click() = Toast.makeText(this, "Button clicked", Toast.LENGTH_SHORT).show()
 }
