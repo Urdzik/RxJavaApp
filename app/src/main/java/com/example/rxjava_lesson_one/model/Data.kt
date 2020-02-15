@@ -1,4 +1,4 @@
-package com.example.rxjava_lesson_one.modal
+package com.example.rxjava_lesson_one.model
 
 import io.reactivex.Flowable
 import retrofit2.Retrofit
@@ -25,7 +25,7 @@ data class Rating (
 
 interface WebApi {
     @GET("book.json")
-    fun massage() : Flowable<List<Data>>
+    fun message() : Flowable<List<Data>>
 }
 
 object retrofitObject {

@@ -1,4 +1,4 @@
-package com.example.rxjava_lesson_one
+package com.example.rxjava_lesson_one.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,13 +7,16 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.example.rxjava_lesson_one.R
 import com.example.rxjava_lesson_one.databinding.ItemBinding
-import com.example.rxjava_lesson_one.modal.Data
+import com.example.rxjava_lesson_one.model.Data
 
 import io.reactivex.subjects.PublishSubject
 
 
-class MainAdapter : ListAdapter<Data, MainAdapter.DataViewHolder>(DiffCallback()) {
+class MainAdapter : ListAdapter<Data, MainAdapter.DataViewHolder>(
+    DiffCallback()
+) {
 
     private val clickSubject = PublishSubject.create<Data>()
     val clickEvent: PublishSubject<Data> = clickSubject
