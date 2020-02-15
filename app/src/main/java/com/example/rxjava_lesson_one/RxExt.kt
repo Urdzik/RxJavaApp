@@ -55,6 +55,14 @@ fun <T> Observable<T>.launchBackgroundTask(
 fun <T> createRxSingle(sourceBlock: () -> T): Single<T> =
     Single.fromCallable { sourceBlock() }
 
+fun <T> createFlowable(sourceBlock: () -> T): Flowable<T> {
+    return Flowable.fromCallable { sourceBlock() }
+}
+
+fun <T> createObservable(sourceBlock: () -> T): Observable<T> {
+    return Observable.fromCallable { sourceBlock() }
+}
+
 //sealed class ResponseState {
 //    object Loading: ResponseState
 //
