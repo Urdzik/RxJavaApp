@@ -6,6 +6,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
+
 data class Data(
     val title : String,
     val text : String,
@@ -18,7 +19,6 @@ data class Data(
 )
 
 data class Rating (
-
     val litres : Double,
     val liveLib : Double
 )
